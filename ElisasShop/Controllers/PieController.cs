@@ -23,11 +23,13 @@ namespace ElisasShop.Controllers
         public ViewResult List()
         {
             PiesListViewModel piesListViewModel = new PiesListViewModel();
-            piesListViewModel.Pies = _pieRepository.Pies;
 
+            // Pies property of our ViewModel (Pie Model) is the same as Pies property of our PieRepository
+            piesListViewModel.Pies = _pieRepository.Pies;
+            // Set the CurrentCategory property of our ViewModel
             piesListViewModel.CurrentCategory = "Cheese cakes";
 
-            // Behind the scenes, it's ViewData.Model property of the ViewResult that's being returned
+            // Behind the scenes, it's ViewData.Model
             return View(piesListViewModel);
         }
     }
