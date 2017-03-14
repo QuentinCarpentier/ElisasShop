@@ -53,6 +53,8 @@ namespace ElisasShop
             // Support for a very simple and basic route.
             app.UseMvcWithDefaultRoute();
 
+            DbInitializer.Seed(app);
+
             // Added with Scaffolding
             loggerFactory.AddConsole(_configurationRoot.GetSection("Logging"));
             loggerFactory.AddDebug();

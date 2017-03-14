@@ -19,7 +19,6 @@ namespace ElisasShop.Models
         public bool InStock { get; set; }
         public int CategoryId { get; set; }
 
-        // TODO Entity Framework
         public virtual Category Category { get; set; }
     }
 }
