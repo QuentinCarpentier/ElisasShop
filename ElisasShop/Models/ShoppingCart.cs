@@ -33,7 +33,7 @@ namespace ElisasShop.Models
 
             // Get the CartId in the session. If it's empty, create a new Guid (sessionId)
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
-            // Set the cartId in the session
+            // Set the CartId in the session
             session.SetString("CartId", cartId);
 
             // Return the ShoppingCart who contains the AppDbContext and the CartId

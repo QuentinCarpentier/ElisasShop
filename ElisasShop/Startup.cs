@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using ElisasShop.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace ElisasShop
 {
@@ -37,10 +38,21 @@ namespace ElisasShop
             // Same here for the Category
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
+            // Allow to access to the context
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // AddScoped will create an object that is associated with the request  
+            // It means that when I'll browse to the site, I'll get my own unique instance to the ShoppingCart
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+
             // Add Mvc support
             services.AddMvc();
-        }
 
+            // Allow to access to the session
+            services.AddMemoryCache();
+            services.AddSession();
+        }
+            
         // Configure the HTTP request pipeline. (middle-ware components)
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
@@ -50,6 +62,8 @@ namespace ElisasShop
             app.UseStatusCodePages();
             // Serve static files.
             app.UseStaticFiles();
+            // Middleware to work with session (have to be before the DefaultRoute method)
+            app.UseSession();
             // Support for a very simple and basic route.
             app.UseMvcWithDefaultRoute();
 
